@@ -3,7 +3,7 @@
 #' @description XXX
 #' location: /net/hafkaldi/export/u2/reikn/Splus5/GETALK
 #' @docType data
-#' @author Einar Hjorleifsson
+#' @author Hoskuldur Bjornsson
 NULL
 
 #' @name gearlist
@@ -11,5 +11,5 @@ NULL
 #' @description XXX
 #' location: /net/hafkaldi/export/u2/reikn/Splus5/GETALK
 #' @docType data
-#' @author Einar Hjorleifsson
+#' @author Hoskuldur Bjornsson
 NULL

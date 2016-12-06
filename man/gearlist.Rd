@@ -9,6 +9,6 @@ XXX
 location: /net/hafkaldi/export/u2/reikn/Splus5/GETALK
 }
 \author{
-Einar Hjorleifsson
+Hoskuldur Bjornsson
 }
 
