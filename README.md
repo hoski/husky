@@ -13,6 +13,8 @@ library(husky)
 
 # Length based SMB indices
 
+__Minimum fuzz adaptation__: The functions and data objects have been moved from the various `.RData` spaces to the `husky`-package. See help files.
+
 __Specs__:
 
 ```r
@@ -56,7 +58,7 @@ The difference in the two scripts is:
 > aggr.visit.fastar$bio <- aggr.visit.fastar$fj*lwcoeff[1]*aggr.visit.fastar$lengd^lwcoeff[2]/1e3
 > base.visit.fastar$bio <- base.visit.fastar$fj*lwcoeff[1]*base.visit.fastar$lengd^lwcoeff[2]/1e3
 ```
-__Minimum fuzz adaptation__: The functions and data objects have been moved from the various `.RData` spaces to the `husky`-package. The following is based on the script `/net/hafkaldi/export/u2/reikn/Splus5/SMB/BIOVISIT_R.sh` with some minimum adaptations.
+The following is based on the script `/net/hafkaldi/export/u2/reikn/Splus5/SMB/BIOVISIT_R.sh` with some minimum adaptations.
 
 
 ```r
@@ -200,6 +202,7 @@ base.visit2$bio <-
 
 __Internal huskyverse comparison__: rough double testing
 
+Load the "official calculation":
 
 ```r
 attach('/net/hafkaldi/export/u2/reikn/Splus5/SMB/TORSKUR/.RData')
@@ -224,9 +227,168 @@ ggplot() +
 
 ![](README_files/figure-html/smb_biomass-1.png)<!-- -->
 
-ERGO: The two huskyverse things are the same
+In the above the black line is the calculation based on the function and objects in the husky-package, the red is the "official calculation". Bottom line: The two huskyverse things are the same (visally).
+
+TODO: A more detailed comparison.
 
 
 ```r
 detach("file:/net/hafkaldi/export/u2/reikn/Splus5/SMB/TORSKUR/.RData")
 ```
+
+UNTESTED BELOW
+
+#  Age based SMB indices - thorskur
+
+The following is based on the script `/net/hafkaldi/export/u2/reikn/Splus5/GETALK/AGEVISIT/torskur.2016/torskur.visit.r` with some minimum adaptations.
+
+
+```r
+ind <- c(31931,31932,32131,36731,37031,37131,37132,37231,41431,41531,42231,42232,47431,52331)
+fj  <- list()
+
+years <- 1985:2016
+regs <- list(S=c(1,9:10),N=2:8)
+regname <- names(regs)
+aldur <- 1:14
+lengd <- c(seq(4.5,109.5,by=5),119.5,139.5)
+
+for( i in 1:length(years) ) {
+ # print(i) 
+  fj[[i]] <- data.frame()
+  if(i == 17)  stauka <- lesa.stodvar(leidangur="A4-2001")  
+  
+  for( j in 1:2) {
+    st <- STODVAR[[i]][!is.na(match(STODVAR[[i]]$area,regs[[j]])) & (STODVAR[[i]]$tognumer < 20 | !is.na(match(STODVAR[[i]]$index,ind))) ,]
+    st.all <- STODVAR[[i]][!is.na(match(STODVAR[[i]]$area,regs[[j]])),]
+    if(i == 17) {
+      cn <- c("lat","lon","synis.id")
+      sttmp <- stauka[stauka$area %in% regs[[j]],cn]
+      st.all <- rbind(st.all[,cn],sttmp[,cn])
+    }
+    
+    le <- lesa.lengdir(st$synis.id,1)
+    kv <- lesa.kvarnir(st.all$synis.id,1,col.names=c("kyn","kynthroski"),oracle=F)
+    
+    nu <- lesa.numer(st$synis.id,1)
+    
+    alk <- MakeAlk(kv, 1, lengd=lengd, aldur = aldur, FilterAldurLengd = F, kynth = T) # Tók filteraldurlengd af
+    
+    ar <- i+1984
+    if(ar < 1993){ 
+      tmp <- torskur.marsrall.wt.8592[torskur.marsrall.wt.8592$reg==regname[j],]
+      } else {
+      tmp <- torskur.marsrall.wt[torskur.marsrall.wt$reg==regname[j] & torskur.marsrall.wt$ar==ar,]}
+    ldist <- MakeLdistbyStation(le,nu,1,lengd=lengd,Stodvar=st,talid=T,lengd.thyngd.data=tmp)
+    fj[[i]]  <- rbind.alk(fj[[i]],Calc.fj.per.station(alk,ldist))
+  }
+}
+
+torskur.fj <- fj
+names(torskur.fj) <- as.character(years)
+
+biomass <- kynthbiomass <-  meanlefj <- sdevfj <- kynthfj <- fj <- list()
+biovisit <- fjvisit <- kynthvisit <- meanlevisit <-  sdevvisit <- kynthbiovisit  <- list()
+
+for(i in 1:length(years)) {
+  #print(i)
+  st <- attributes(torskur.fj[[i]])$Stodvar
+  fj <- kynthfj <- biomass <- meanlefj <- sdevfj <- kynthbiomass <- list()
+  biom <- torskur.fj[[i]]$WtPerAldur*torskur.fj[[i]]$FjPerAldur
+  biom[is.na(biom)] <- 0
+  kynthbiom <- torskur.fj[[i]]$KynthWtPerAldur*torskur.fj[[i]]$KynthFjPerAldur
+  kynthbiom[is.na(kynthbiom)] <- 0
+  for(j in 1:14) {
+    #cat(paste(j," "))
+    fj[[j]] <- Calc.index(st,z=torskur.fj[[i]]$FjPerAldur[,j])$aggr.output
+    kynthfj[[j]] <- Calc.index(st,z=torskur.fj[[i]]$KynthFjPerAldur[,j])$aggr.output
+    biomass[[j]] <- Calc.index(st,z=biom[,j])$aggr.output
+    meanlefj[[j]] <- Calc.index(st,z=torskur.fj[[i]]$LengdSinnumFjPerAldur[,j])$aggr.output
+    sdevfj[[j]] <- Calc.index(st,z=torskur.fj[[i]]$Lengd2SinnumFjPerAldur[,j])$aggr.output
+    kynthbiomass[[j]] <- Calc.index(st,z=kynthbiom[,j])$aggr.output
+  }
+  biovisit[[i]] <- biomass
+  fjvisit[[i]] <- fj
+  kynthvisit[[i]] <- kynthfj
+  kynthbiovisit[[i]] <- kynthbiomass
+  sdevvisit[[i]] <- sdevfj
+  meanlevisit[[i]] <- meanlefj
+}
+```
+
+
+```r
+# net/hafkaldi/export/u2/reikn/Splus5/GETALK/AGEVISIT/torskur.2016/combine.r
+#Rattach("/home/hoski/GETALK")
+torskur.visit.n <- combine.alk.visit(fjvisit, kynthvisit, biovisit,meanlevisit,sdevvisit,kynthbiovisit ,row = 13, aldur = 1:14,ar=1985:2016)
+torskur.visit.s <- combine.alk.visit(fjvisit, kynthvisit, biovisit,meanlevisit,sdevvisit,kynthbiovisit,row = c(14), aldur = 1:14,ar=1985:2016)
+torskur.visit.tot  <- combine.alk.visit(fjvisit, kynthvisit, biovisit, meanlevisit,sdevvisit,kynthbiovisit,row = c(22), aldur = 1:14,ar=1985:2016
+)
+
+torskur.visit.n$fj <- t(round(torskur.visit.n$fj,2))
+torskur.visit.n$cv <- t(round(torskur.visit.n$cv,3))
+torskur.visit.n$kynthhlutfall<- t(round(torskur.visit.n$kynthhlutfall*100,1))
+torskur.visit.n$wt <- t(round(torskur.visit.n$wt*1000))
+torskur.visit.n$kynthwt <- t(round(torskur.visit.n$kynthwt*1000))
+torskur.visit.n$meanle <- t(round(torskur.visit.n$meanle,1))
+torskur.visit.n$sdev <- t(round(torskur.visit.n$sdev,1))
+
+torskur.visit.s$cv <- t(round(torskur.visit.s$cv,3))
+torskur.visit.s$fj <- t(round(torskur.visit.s$fj,2))
+torskur.visit.s$kynthhlutfall<- t(round(torskur.visit.s$kynthhlutfall*100,1))
+torskur.visit.s$wt <- t(round(torskur.visit.s$wt*1000))
+torskur.visit.s$kynthwt <- t(round(torskur.visit.s$kynthwt*1000))
+torskur.visit.s$meanle <- t(round(torskur.visit.s$meanle,1))
+torskur.visit.s$sdev <- t(round(torskur.visit.s$sdev,1))
+
+torskur.visit.tot$cv <- t(round(torskur.visit.tot$cv,3))
+torskur.visit.tot$fj <- t(round(torskur.visit.tot$fj,2))
+torskur.visit.tot$kynthhlutfall<- t(round(torskur.visit.tot$kynthhlutfall*100,1))
+torskur.visit.tot$wt <- t(round(torskur.visit.tot$wt*1000))
+torskur.visit.tot$kynthwt <- t(round(torskur.visit.tot$kynthwt*1000))
+torskur.visit.tot$meanle <- t(round(torskur.visit.tot$meanle,1))
+torskur.visit.tot$sdev <- t(round(torskur.visit.tot$sdev,1))
+
+
+# Setja saman fyrir ORACLE
+
+age <- 1:14
+year <- 1985:2016
+n <- length(age)
+age <- matrix(age,n,length(year)) 
+year <- matrix(year,n,length(year),byrow=T)
+yearage <- data.frame(year=c(year),age=c(age))
+
+tmp <- yearage
+tmp$reg <- rep("Tot",nrow(tmp))
+tmp$fj <- c(torskur.visit.tot$fj)
+tmp$cv <- c(torskur.visit.tot$cv)
+tmp$wt <- c(torskur.visit.tot$wt)
+tmp$kynthhlutfall <- c(torskur.visit.tot$kynthhlutfall)
+tmp$meanle <- c(torskur.visit.tot$meanle)
+tmp$sdev <- c(torskur.visit.tot$sdev)
+tmp$kynthwt <- c(torskur.visit.tot$kynthwt)
+
+tmp1 <- yearage
+tmp1$reg <- rep("N",nrow(tmp1))
+tmp1$fj <- c(torskur.visit.n$fj)
+tmp1$cv <- c(torskur.visit.n$cv)
+tmp1$wt <- c(torskur.visit.n$wt)
+tmp1$kynthhlutfall <- c(torskur.visit.n$kynthhlutfall)
+tmp1$meanle <- c(torskur.visit.n$meanle)
+tmp1$sdev <- c(torskur.visit.n$sdev)
+tmp1$kynthwt <- c(torskur.visit.n$kynthwt)
+
+tmp2 <- yearage
+tmp2$reg <- rep("S",nrow(tmp2))
+tmp2$fj <- c(torskur.visit.s$fj)
+tmp2$cv <- c(torskur.visit.s$cv)
+tmp2$wt <- c(torskur.visit.s$wt)
+tmp2$kynthhlutfall <- c(torskur.visit.s$kynthhlutfall)
+tmp2$meanle <- c(torskur.visit.s$meanle)
+tmp2$sdev <- c(torskur.visit.s$sdev)
+tmp2$kynthwt <- c(torskur.visit.s$kynthwt)
+
+torskur.visit.oracle <- rbind(tmp,tmp1,tmp2)
+```
+
