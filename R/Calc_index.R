@@ -59,7 +59,7 @@ Calc.index <-
       }
     }
     tmp6 <- apply.shrink(sfile[, colname], sfile$strata, mean)
-    tmp7 <- apply.shrink(sfile[, colname], sfile$strata, sdev)
+    tmp7 <- apply.shrink(sfile[, colname], sfile$strata, sd)
     tmp8 <- apply.shrink(rep(1, nrow(sfile)), sfile$strata, sum)
     result <- data.frame(strata = tmp8[, 1], mean = tmp6[, 2],
                          sdev = tmp7[, 2], count = tmp8[, 2])
