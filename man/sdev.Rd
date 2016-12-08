@@ -4,10 +4,12 @@
 \alias{sdev}
 \title{sdev}
 \usage{
-sdev(x)
+sdev(x, ...)
 }
 \arguments{
 \item{x}{XXX}
+
+\item{...}{other arguments passed to sd}
 }
 \description{
 location: /net/hafkaldi/export/u2/reikn/Splus5/SMB/GEOMETRY.NEW/.RData

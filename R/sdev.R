@@ -6,5 +6,5 @@
 #' @param x XXX
 #' @param ... other arguments passed to sd
 sdev <- function (x,...) {
-  return(sd(x,...)))
+  return(stats::sd(x,...))
 }

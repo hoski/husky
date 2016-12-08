@@ -301,6 +301,7 @@ hafstokkur/net/hafkaldi/export/u2/reikn/Splus5 [1149] diff SMB/BIOVISIT_R.sh SMB
 The following is based on the script `/net/hafkaldi/export/u2/reikn/Splus5/GETALK/AGEVISIT/torskur.2016/torskur.visit.r` with some minimum adaptations.
 
 ```{r}
+
 ind <- c(31931,31932,32131,36731,37031,37131,37132,37231,41431,41531,42231,42232,47431,52331)
 fj  <- list()
 
