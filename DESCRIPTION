@@ -9,7 +9,8 @@ Authors@R:
 Maintainer: Einar Hjorleifsson <einar.hjorleifsson@gmail.com>
 Description: A collection of hoski-functions.
 Depends:
-    R (>= 3.1.1)
+    R (>= 3.1.1),
+    geo
 Imports: 
 License: GPL (>= 2)
 LazyData: TRUE
