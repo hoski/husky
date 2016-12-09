@@ -22,3 +22,12 @@ NULL
 #' @docType data
 #' @author Einar Hjorleifsson
 NULL
+
+#' @name haustralllist
+#' @title XXX
+#' @description XXX
+#' location: /net/hafkaldi/export/u2/reikn/Splus5/HAUSTRALLNewStrata/Stratifiering/.RData
+#' use_data(haustralllist)
+#' @docType data
+#' @author Hoskuldur Bjornsson
+NULL
