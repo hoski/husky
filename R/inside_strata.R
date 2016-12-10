@@ -4,14 +4,15 @@
 #'
 #' @param stodvar XXX
 #' @param stratalist XXX
+#' @param stratas XXX Defaults to the old strata (NOTE: Not in huskys original)
 #'
 #' @export
 #'
-inside.strata <- function (stodvar, stratalist = ralllist)
+inside.strata <- function (stodvar, stratalist = ralllist, stratas = STRATAS)
 {
   stodvar$newstrata <- rep(0, nrow(stodvar))
   for (i in stratalist) {
-    j <- geo::geoinside(stodvar, reg = STRATAS[[i]], robust = T,
+    j <- geo::geoinside(stodvar, reg = stratas[[i]], robust = T,
                         option = 0)
     if (length(j) > 0)
       stodvar[j, "newstrata"] <- i

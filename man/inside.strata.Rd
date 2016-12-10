@@ -4,12 +4,14 @@
 \alias{inside.strata}
 \title{inside.strata}
 \usage{
-inside.strata(stodvar, stratalist = ralllist)
+inside.strata(stodvar, stratalist = ralllist, stratas = STRATAS)
 }
 \arguments{
 \item{stodvar}{XXX}
 
 \item{stratalist}{XXX}
+
+\item{stratas}{XXX Defaults to the old strata (NOTE: Not in huskys original)}
 }
 \description{
 location: /net/hafkaldi/export/u2/reikn/Splus5/SMB/GEOMETRY.NEW/.RData
