@@ -13,19 +13,22 @@ knitr::opts_chunk$set(eval = TRUE, echo = TRUE,
 
 # Preamble
 
-The calculation of the MRI survey indices have for quite some time been done via a bundle of R-scripts and data objects that reside in various .RData binary directories in the reikn/Splus5 space.
+The calculation of the MRI groundfish survey indices have for quite some time been done via a bundle of R-scripts and data objects that reside in various .RData binary directories in the reikn/Splus5 space. These have been moved from the blackholes to the `husky`-package. What this means is that those interested in calculating survey indices no longer need to "attach" to .RData binary directories, only install and load the husky-package and run the usual code (examples provided below).
+
+This move is just a stepping stone in the evolution of survey index calculation, the next generation is being developed within the [pax-package](https://github.com/fishvice/pax).
 
 
 ```{r}
 library(ggplot2)
 library(dplyr)
 library(fjolst)
+# devtools::install_github("fishvice/husky", dependencies = FALSE)
 library(husky)
 ```
 
 # Length based SMB indices
 
-__Minimum fuzz adaptation__: The functions and data objects have been moved from the various `.RData` spaces to the `husky`-package. See help files.
+__Minimum fuzz adaptation__
 
 __Specs__:
 ```{r}

@@ -2,18 +2,25 @@
 
 
 
+# Preamble
+
+The calculation of the MRI groundfish survey indices have for quite some time been done via a bundle of R-scripts and data objects that reside in various .RData binary directories in the reikn/Splus5 space. These have been moved from the blackholes to the `husky`-package. What this means is that those interested in calculating survey indices no longer need to "attach" to .RData binary directories, only install and load the husky-package and run the usual code (examples provided below).
+
+This move is just a stepping stone in the evolution of survey index calculation, the next generation is being developed within the [pax-package](https://github.com/fishvice/pax).
+
 
 
 ```r
 library(ggplot2)
 library(dplyr)
 library(fjolst)
+# devtools::install_github("fishvice/husky", dependencies = FALSE)
 library(husky)
 ```
 
 # Length based SMB indices
 
-__Minimum fuzz adaptation__: The functions and data objects have been moved from the various `.RData` spaces to the `husky`-package. See help files.
+__Minimum fuzz adaptation__
 
 __Specs__:
 
@@ -227,16 +234,69 @@ ggplot() +
 
 ![](README_files/figure-html/smb_biomass-1.png)<!-- -->
 
-In the above the black line is the calculation based on the function and objects in the husky-package, the red is the "official calculation". Bottom line: The two huskyverse things are the same (visally).
+In the above the black line is the calculation based on the function and objects in the husky-package, the red is the "official calculation". Bottom line: The two huskyverse things are, not surprisingly, the same (visally).
 
-TODO: A more detailed comparison.
+TODO: A more detailed comparison, including cv-calculations
 
 
 ```r
 detach("file:/net/hafkaldi/export/u2/reikn/Splus5/SMB/TORSKUR/.RData")
 ```
 
-UNTESTED BELOW
+# Note the difference in the "old" and new strata scrips
+particularily the Calc.index function call, see below:
+```
+hafstokkur/net/hafkaldi/export/u2/reikn/Splus5 [1149] diff SMB/BIOVISIT_R.sh SMBNewstrata/BIOVISIT_R.sh 
+1c1
+< for yr in 1985 1986 1987 1988 1989 1990 1991 1992 1993 1994 1995 1996 1997 1998 1999 2000 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011 2012
+---
+> for yr in 1985 1986 1987 1988 1989 1990 1991 1992 1993 1994 1995 1996 1997 1998 1999 2000 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013
+6,7c6,8
+< Rattach("..")
+< Rattach("../GEOMETRY.NEW")
+---
+> Rattach("../../SMBNewstrata")
+> Rattach("../../SMB/GEOMETRY.NEW")
+> attach("../../HAUSTRALLNewStrata/Stratifiering/.RData",pos=2)
+10,12c11,13
+< st1 <- STODVAR$y999[STODVAR$y999$tognumer %in% 1:39,]
+< tmp <- lesa.lengdir(st1$synis.id,TEG,col.names="kyn")
+< tmp1 <- lesa.numer(st1$synis.id,TEG) 
+---
+> tmp8 <- STODVAR.all[(STODVAR.all$tognumer %in% 1:39 | is.na(STODVAR.all$tognumer)) & STODVAR.all$ar==999,]
+> tmp <- lesa.lengdir(tmp8$synis.id,TEG,col.names="kyn")
+> tmp1 <- lesa.numer(tmp8$synis.id,TEG) 
+26c27
+<      st <- join(st1[,c("newstrata","toglengd","synis.id")],x,"synis.id",set=0)
+---
+>      st <- join(tmp8[,c("newstrata","toglengd","synis.id")],x,"synis.id",set=0)
+29c30
+<     st <- st1[,c("newstrata","toglengd","synis.id")]
+---
+>     st <- tmp8[,c("newstrata","toglengd","synis.id")]
+75,77c76,78
+<   tmp.visit <- Calc.index(st,"fj")
+<   tmp.biovisit <- Calc.index(st,"bioge")
+<   tmp.seidavisit <- Calc.index(st,"fjle")
+---
+>   tmp.visit <- Calc.index(st,"fj",combine.output=SMBaggregation)
+>   tmp.biovisit <- Calc.index(st,"bioge",combine.output=SMBaggregation)
+>   tmp.seidavisit <- Calc.index(st,"fjle",combine.output=SMBaggregation)
+79,80c80,81
+<     tmp.haengavisit <- Calc.index(st,"fjhaenga")
+<     tmp.hrygnuvisit <- Calc.index(st,"fjhrygna")
+---
+>     tmp.haengavisit <- Calc.index(st,"fjhaenga",combine.output=SMBaggregation)
+>     tmp.hrygnuvisit <- Calc.index(st,"fjhrygna",combine.output=SMBaggregation)
+141,142c142,144
+< Rattach("..")
+< Rattach("../GEOMETRY.NEW")
+---
+> Rattach("../../SMBNewstrata")
+> Rattach("../../SMB/GEOMETRY.NEW")
+> attach("../../HAUSTRALLNewStrata/Stratifiering/.RData",pos=2)
+```
+
 
 #  Age based SMB indices - thorskur
 
