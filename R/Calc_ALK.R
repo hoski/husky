@@ -17,6 +17,8 @@ Calc.ALK <-
     ALK.TOT <- OTH.TOT/apply(OTH.TOT, 1, sum)
     ALK.TOT[is.na(ALK.TOT)] <- 0
     i <- apply(ALK.TOT, 1, sum) == 0
+    # if some length classes do not have any age
+    # use smooth.spline for predictions
     if (any(i)) {
       i1 <- 1:length(i)
       i1 <- i1[i]

@@ -11,7 +11,7 @@
 #' @param maxage XXX
 #' @param vikmork XXX
 kv.filter <-
-  function (kv, tegund, maxage, vikmork=pax::vikmork)
+  function (kv, tegund, maxage, vikmork = vikmork)
   {
     all.teg <- c(1, 2, 3)
     if (is.na(match(tegund, all.teg))) {
