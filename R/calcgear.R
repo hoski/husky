@@ -9,7 +9,7 @@
 #' @param sfile XXX
 #' @param gearlist XXX
 calcgear <-
-  function (sfile,gearlist=pax::gearlist)
+  function (sfile, gearlist)
   {
     j <- match(sfile$veidarfaeri, gearlist$veidarfaeri)
     sfile$vf <- gearlist$geartext[j]

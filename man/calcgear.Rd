@@ -4,7 +4,7 @@
 \alias{calcgear}
 \title{XXX}
 \usage{
-calcgear(sfile, gearlist = pax::gearlist)
+calcgear(sfile, gearlist)
 }
 \arguments{
 \item{sfile}{XXX}

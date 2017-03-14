@@ -6,7 +6,6 @@
 \title{vikmork}
 \description{
 XXX
-location: /net/hafkaldi/export/u2/reikn/Splus5/GETALK
 }
 \author{
 Hoskuldur Bjornsson

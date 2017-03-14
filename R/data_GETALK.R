@@ -1,7 +1,7 @@
 #' @name vikmork
 #' @title vikmork
 #' @description XXX
-#' location: /net/hafkaldi/export/u2/reikn/Splus5/GETALK
+#' @location: /net/hafkaldi/export/u2/reikn/Splus5/GETALK
 #' @docType data
 #' @author Hoskuldur Bjornsson
 NULL
