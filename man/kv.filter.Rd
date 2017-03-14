@@ -4,7 +4,7 @@
 \alias{kv.filter}
 \title{XXX}
 \usage{
-kv.filter(kv, tegund, maxage, vikmork = pax::vikmork)
+kv.filter(kv, tegund, maxage, vikmork = vikmork)
 }
 \arguments{
 \item{kv}{XXX}
