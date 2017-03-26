@@ -11,7 +11,7 @@ inside.strata(stodvar, stratalist = ralllist, stratas = STRATAS)
 
 \item{stratalist}{XXX}
 
-\item{stratas}{XXX Defaults to the old strata (NOTE: Not in huskys original)}
+\item{stratas}{XXX Defaults to the old strata (NOTE: Argument ot in huskys original)}
 }
 \description{
 location: /net/hafkaldi/export/u2/reikn/Splus5/SMB/GEOMETRY.NEW/.RData

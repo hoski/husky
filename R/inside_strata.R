@@ -4,7 +4,7 @@
 #'
 #' @param stodvar XXX
 #' @param stratalist XXX
-#' @param stratas XXX Defaults to the old strata (NOTE: Not in huskys original)
+#' @param stratas XXX Defaults to the old strata (NOTE: Argument ot in huskys original)
 #'
 #' @export
 #'
