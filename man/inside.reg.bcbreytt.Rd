@@ -21,4 +21,3 @@ inside.reg.bcbreytt(data, only.sv.1to10 = F, ignore.latlon = F,
 \description{
 Title
 }
-

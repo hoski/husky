@@ -13,4 +13,3 @@ use_data(NEWSTRATAS)
 \author{
 Hoskuldur Bjornsson
 }
-

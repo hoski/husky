@@ -12,4 +12,3 @@ mostcommon(x)
 \description{
 This function often used in apply.shrink
 }
-

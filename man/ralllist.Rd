@@ -11,4 +11,3 @@ location: /net/hafkaldi/export/u2/reikn/Splus5/SMB/ralllist??
 \author{
 Hoskuldur Bjornsson
 }
-

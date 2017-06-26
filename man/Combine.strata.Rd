@@ -18,4 +18,3 @@ Function used both in \code{\link{Calc.index}}.
 \details{
 location: /net/hafkaldi/export/u2/reikn/Splus5/SMB/GEOMETRY.NEW/.RData
 }
-

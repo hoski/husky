@@ -16,4 +16,3 @@ inside.strata(stodvar, stratalist = ralllist, stratas = STRATAS)
 \description{
 location: /net/hafkaldi/export/u2/reikn/Splus5/SMB/GEOMETRY.NEW/.RData
 }
-

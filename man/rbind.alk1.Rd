@@ -4,7 +4,7 @@
 \alias{rbind.alk1}
 \title{XXX}
 \usage{
-rbind.alk1(fj1, fj2)
+\method{rbind}{alk1}(fj1, fj2)
 }
 \arguments{
 \item{fj1}{XXX}
@@ -16,4 +16,3 @@ XXX
 
 location: /net/hafkaldi/export/u2/reikn/Splus5/GETALK/.RData
 }
-

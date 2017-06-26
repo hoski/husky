@@ -18,4 +18,3 @@ use_data(stratas_df)
 \author{
 Einar Hjorleifsson
 }
-

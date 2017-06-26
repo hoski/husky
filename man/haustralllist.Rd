@@ -12,4 +12,3 @@ use_data(haustralllist)
 \author{
 Hoskuldur Bjornsson
 }
-

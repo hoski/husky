@@ -11,4 +11,3 @@ location: /net/hafkaldi/export/u2/reikn/hoski/SurveyWork/NewStratas/.RData
 \author{
 Hoskuldur Bjornsson
 }
-

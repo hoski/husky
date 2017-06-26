@@ -18,4 +18,3 @@ use_data(newstratas)
 \author{
 Einar Hjorleifsson
 }
-

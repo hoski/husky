@@ -10,4 +10,3 @@ XXX
 \author{
 Hoskuldur Bjornsson
 }
-
