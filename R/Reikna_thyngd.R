@@ -12,7 +12,7 @@ Reikna.thyngd <-
   function (lengdir, l.th.gogn)
   {
     if (is.data.frame(l.th.gogn)) {
-      lengdir <- plyr::join(lengdir, l.th.gogn[, c("lengd", "oslaegt")],
+      lengdir <- join(lengdir, l.th.gogn[, c("lengd", "oslaegt")],
                             "lengd")
       n <- ncol(lengdir)
       names(lengdir)[n] <- "wt"

@@ -19,7 +19,7 @@ Skala.med.toglengd <-
     i <- is.na(Stodvar$toglengd) | Stodvar$toglengd > 0
     if (any(i))
       Stodvar$toglengd[i] <- std.toglengd
-    tmp <- plyr::join(lengdir, Stodvar[, c("synis.id", "toglengd")],
+    tmp <- join(lengdir, Stodvar[, c("synis.id", "toglengd")],
                       "synis.id")
     lengdir$fj.alls <- lengdir$fj.alls * std.toglengd/lengdir$toglengd
     return(lengdir)

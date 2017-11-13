@@ -6,6 +6,7 @@
 \title{alternative bormicon regions}
 \description{
 XXX
+location: /net/hafkaldi/export/u2/reikn/Tac/2016/02/HBFunctions/.RData
 }
 \author{
 Hoskuldur Bjornsson

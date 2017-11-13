@@ -10,7 +10,8 @@ Maintainer: Einar Hjorleifsson <einar.hjorleifsson@gmail.com>
 Description: A collection of hoski-functions.
 Depends:
     R (>= 3.1.1),
-    geo
+    geo,
+    fjolst
 Imports: 
 License: GPL (>= 2)
 LazyData: TRUE
