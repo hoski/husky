@@ -11,7 +11,7 @@ Description: A collection of hoski-functions.
 Depends:
     R (>= 3.1.1),
     geo,
-    fjolst
+    fjolstnew
 Imports: 
 License: GPL (>= 2)
 LazyData: TRUE
